@@ -38,8 +38,9 @@ jobs:
       - name: Install Project Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest
-          pip install -r requirements.txt     
+          pip install wheel
+          pip install -r requirements.txt
+          pip install pytest 
 
       # Step 4: Se hace el build de la aplicación
       - name: Build Application
