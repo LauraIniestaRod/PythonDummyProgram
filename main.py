@@ -13,7 +13,7 @@ def home():
 
     response = {
         "addition": f"{a} + {b} = {sum_result}",
-        "subtraction": f"{a} - {b} = {sub_result}"
+        "subtraction": f"{a} - {b} = {sub_result}",
     }
     return jsonify(response)
 
