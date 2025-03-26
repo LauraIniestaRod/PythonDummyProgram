@@ -1,5 +1,5 @@
 # Nombre del workflow
-name: CI Pipeline
+name: CI Jobs Pipeline
 
 # Define los eventos que activan el workflow
 on:
