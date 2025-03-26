@@ -86,5 +86,5 @@ jobs:
 
       - name: Run Pylint for code analysis
         run: |
-          pylint my_module
+          python -m pylint main.py
 #Meter la calidad de código después de los tests
