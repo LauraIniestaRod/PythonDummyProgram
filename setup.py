@@ -1,3 +1,5 @@
+"Configuracion del proyecto"
+
 from setuptools import setup, find_packages
 
 setup(
