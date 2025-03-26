@@ -1,0 +1,70 @@
+# Nombre del workflow
+name: CI Pipeline
+
+# Define los eventos que hacen saltar el workflow
+on:
+  # Se debe ejecutar en push a la rama main
+  push:
+    branches:
+      - main
+   # Se debe ejecutar en pull requests a la rama main
+  pull_request:
+    branches:
+      - main
+
+# Define los jobs que se ejecutarán como parte del workflow
+jobs:
+  # Debemos ejecutar el build de la solución
+  build:
+    # Especifica el tipo de máquina en la que se ejecutará el job
+    runs-on: ubuntu-latest
+
+    # Define los pasos que se deben ejecutar en este job
+    steps:
+      # Step 1: Accede al código en su repositorio correspondiente
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        # This action checks out the repository under
+        # $GITHUB_WORKSPACE, so the workflow can access it.
+
+      # Step 2: Prepara el entorno en el lenguaje deseado
+      - name: Set Up Python Environment
+        uses: actions/setup-python@v2
+        with:
+          # Especificamos la versión del lenguaje a utilizar
+          python-version: "3.9" 
+
+      # Step 3: Instalamos las dependencias del proyecto
+      - name: Install Project Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install -r requirements.txt     
+
+      # Setp 4: Revision de calidad del código
+      - name: Run Flake8 for code quality
+        run: |
+          flake8 . --max-line-length=79     
+
+      # Step 5: Ejecutamos los test
+      - name: Run Tests
+        run: |
+          pytest test_script_corrected.py  
+      
+      - name: Check code format with black
+        run: |
+          black --check .
+
+      - name: Run Pylint for code analysis
+        run: |
+          pylint my_module
+
+
+      # Step 6: En caso de pasar los tests, se hace el build de la aplicación
+      - name: Build Application
+        if: success()
+        run: |
+
+          echo "Building the application..."
+          python setup.py sdist bdist_wheel
+          echo "Build complete!"
