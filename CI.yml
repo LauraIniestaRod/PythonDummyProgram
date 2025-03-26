@@ -41,30 +41,31 @@ jobs:
           pip install pytest
           pip install -r requirements.txt     
 
-      # Setp 4: Revision de calidad del código
-      - name: Run Flake8 for code quality
+      # Step 4: Se hace el build de la aplicación
+      - name: Build Application
         run: |
-          flake8 . --max-line-length=79     
-
-      # Step 5: Ejecutamos los test
+          echo "Building the application..."
+          python setup.py sdist bdist_wheel
+          echo "Build complete!"
+      
+      # Step 5: Ejecutamos los test en caso de que los pasos anteriores sean exitosos
       - name: Run Tests
+        if: success()
         run: |
           pytest test_script_corrected.py  
       
+      # Setp 6: Revision de calidad del código
+      - name: Run Flake8 for code quality
+        if: success()
+        run: |
+          flake8 . --max-line-length=79     
+
       - name: Check code format with black
+        if: success()
         run: |
           black --check .
 
       - name: Run Pylint for code analysis
-        run: |
-          pylint my_module
-
-
-      # Step 6: En caso de pasar los tests, se hace el build de la aplicación
-      - name: Build Application
         if: success()
         run: |
-
-          echo "Building the application..."
-          python setup.py sdist bdist_wheel
-          echo "Build complete!"
+          pylint my_module
