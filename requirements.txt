@@ -1,3 +1,6 @@
 flask
+wheel
 gunicorn
 flake8
+black
+
