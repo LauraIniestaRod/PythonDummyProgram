@@ -6,7 +6,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    a, b = 10, 5  # Valores de ejemplo
+    a, b = 10, 5  
+    # Valores de ejemplo
     sum_result = add(a, b)
     sub_result = subtract(a, b)
 
