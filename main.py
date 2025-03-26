@@ -11,7 +11,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    """Este método se encarga de mostrar el resultado de operaciones matemáticas"""
+    """Este método se encarga de mostrar el resultado
+    de operaciones matemáticas"""
     a, b = 10, 5  # Valores de ejemplo
     sum_result = add(a, b)
     sub_result = subtract(a, b)
